@@ -117,3 +117,366 @@ Abi: 0db2987ea1aa50c6d864d62cb3279fdc53866a36342885374f0ae4eb435df54f
 Description: C++ Object Oriented Wrapper for raylib
 Status: install ok installed
 
+Package: libwebp
+Version: 1.6.0
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 393d273c10c9051853be7a0f302eeee865ab0b095266fb03dd642d74be79eb4b
+Description: WebP codec: library to encode and decode images in WebP format
+Default-Features: libwebpmux, nearlossless, simd
+Status: purge ok not-installed
+
+Package: libwebp
+Feature: libwebpmux
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build the libwebpmux library
+Status: purge ok not-installed
+
+Package: libwebp
+Feature: nearlossless
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable near-lossless encoding
+Status: purge ok not-installed
+
+Package: libwebp
+Feature: simd
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable any SIMD optimization.
+Status: purge ok not-installed
+
+Package: libwebp
+Feature: unicode
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build Unicode executables. (Adds definition UNICODE and _UNICODE)
+Status: purge ok not-installed
+
+Package: zlib
+Version: 1.3.1
+Depends: vcpkg-cmake
+Architecture: x64-windows
+Multi-Arch: same
+Abi: d8973daba97aea36700f358a1ef4f8803e652f91d330d14c705cbde28bc817b4
+Description: A compression library
+Status: purge ok not-installed
+
+Package: liblzma
+Version: 5.8.1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 72d848bcfcacb18bc82b83db2d0f4c71a93c7efc6831c3afcac110df318168af
+Description: Compression library with an API similar to that of zlib.
+Status: purge ok not-installed
+
+Package: libjpeg-turbo
+Version: 3.1.2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c14431ee9cce060c0e06d4f912f8cd1a9217a810dd87d173381218c920661155
+Description: libjpeg-turbo is a JPEG image codec that uses SIMD instructions (MMX, SSE2, NEON, AltiVec) to accelerate baseline JPEG compression and decompression on x86, x86-64, ARM, and PowerPC systems.
+Status: purge ok not-installed
+
+Package: tiff
+Version: 4.7.1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a02a8d95bbc2aa44cb479db702d80f8c7359d4f228244cccb36e3be44320d692
+Description: A library that supports the manipulation of TIFF image files
+Default-Features: jpeg, lzma, zip
+Status: purge ok not-installed
+
+Package: tiff
+Feature: jpeg
+Depends: libjpeg-turbo
+Architecture: x64-windows
+Multi-Arch: same
+Description: Support JPEG compression in TIFF image files
+Status: purge ok not-installed
+
+Package: tiff
+Feature: lzma
+Depends: liblzma
+Architecture: x64-windows
+Multi-Arch: same
+Description: Support LZMA compression in TIFF image files
+Status: purge ok not-installed
+
+Package: tiff
+Feature: zip
+Depends: zlib
+Architecture: x64-windows
+Multi-Arch: same
+Description: Support ZIP/deflate compression in TIFF image files
+Status: purge ok not-installed
+
+Package: quirc
+Version: 1.2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e2b4db92c8e9554d30a5ba2b900104c945ded5d1d5cea9b6dc872c08df6bc5c9
+Description: quirc is one of the C library available for scanning QR Codes
+Status: purge ok not-installed
+
+Package: libpng
+Version: 1.6.50
+Depends: vcpkg-cmake, vcpkg-cmake-config, zlib
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 862c9dd280a8a4fd75f9219167a522acf9899ab4376dc65e7a69c076ce0a9126
+Description: libpng is a library implementing an interface for reading and writing PNG (Portable Network Graphics) format files
+Status: purge ok not-installed
+
+Package: abseil
+Version: 20250512.1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: cd1b0f8046565a9864b0fa6f9e835981914558d248a109010ef6bb4ce0a3edea
+Description: Abseil is an open-source collection of C++ library code designed to augment the C++ standard library. The Abseil library code is collected from Google's own C++ code base, has been extensively tested and used in production, and is the same code we depend on in our daily coding lives.
+    In some cases, Abseil provides pieces missing from the C++ standard; in others, Abseil provides alternatives to the standard for special needs we've found through usage in the Google code base. We denote those cases clearly within the library code we provide you.
+    Abseil is not meant to be a competitor to the standard library; we've just found that many of these utilities serve a purpose within our code base, and we now want to provide those resources to the C++ community as a whole.
+Status: purge ok not-installed
+
+Package: utf8-range
+Version: 5.29.5
+Depends: abseil, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a42510f56b4d7da3cd695c4c90aa6563e0da626d83a2b04889428d8a3a7cbdf0
+Description: Fast UTF-8 validation with Range algorithm (NEON+SSE4+AVX2)
+Status: purge ok not-installed
+
+Package: protobuf
+Version: 5.29.5
+Port-Version: 2
+Depends: abseil, utf8-range, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 1433c7b6a3e8c76db9f846cf7aed110b94073d417352360df3780b8c2dc9dbe6
+Description: Google's language-neutral, platform-neutral, extensible mechanism for serializing structured data.
+Status: purge ok not-installed
+
+Package: flatbuffers
+Version: 25.9.23
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: ea232e059b17c815039b21d07de2c54a29761fc1675f69705272b58b857c0716
+Description: FlatBuffers is a cross platform serialization library architected for maximum memory efficiency. It allows you to directly access serialized data without parsing/unpacking it first, while still having great forwards/backwards compatibility.
+Status: purge ok not-installed
+
+Package: vcpkg-get-python-packages
+Version: 2025-04-05
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e8da2097f7ffe137fad705d2ec88689f7a082a86181b4ad577bced4e15be3204
+Status: purge ok not-installed
+
+Package: opencv4
+Version: 4.11.0
+Port-Version: 4
+Depends: vcpkg-cmake, vcpkg-cmake-config, vcpkg-get-python-packages, zlib
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 8e8cf65dac29cc609e6d5a969e9149b72e3d21d0a12b3d5fc4bc181b0e768ed8
+Description: computer vision library
+Default-Features: calib3d, directml, dnn, dshow, fs, gapi, highgui, intrinsics, jpeg, msmf, png, quirc, thread, tiff, webp, win32ui
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: calib3d
+Architecture: x64-windows
+Multi-Arch: same
+Description: calib3d module
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: directml
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build with DirectML support
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: dnn
+Depends: flatbuffers, protobuf
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable dnn module
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: dshow
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable DirectShow
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: fs
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable filesystem support
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: gapi
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable gapi module
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: highgui
+Architecture: x64-windows
+Multi-Arch: same
+Description: highgui module
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: intrinsics
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable intrinsics
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: jpeg
+Depends: libjpeg-turbo
+Architecture: x64-windows
+Multi-Arch: same
+Description: JPEG support for opencv
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: msmf
+Architecture: x64-windows
+Multi-Arch: same
+Description: Microsoft Media Foundation support for opencv
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: png
+Depends: libpng
+Architecture: x64-windows
+Multi-Arch: same
+Description: PNG support for opencv
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: quirc
+Depends: quirc
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable QR code module
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: thread
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable thread support
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: tiff
+Depends: tiff
+Architecture: x64-windows
+Multi-Arch: same
+Description: TIFF support for opencv
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: webp
+Depends: libwebp
+Architecture: x64-windows
+Multi-Arch: same
+Description: WebP support for opencv
+Status: purge ok not-installed
+
+Package: opencv4
+Feature: win32ui
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable win32ui
+Status: purge ok not-installed
+
+Package: opencv
+Version: 4.11.0
+Depends: opencv4
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c373841f9f60bba041716d12fa1dd76375fc9c8aa36288b04ea9b9c8e488b14b
+Description: computer vision library
+Status: purge ok not-installed
+
+Package: eigen3
+Version: 3.4.1
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 75e7f3d4c2b29dfaaadbc30c691dacbc6fde9085f17ae02a62b6a238efaa3ee8
+Description: C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms.
+Status: purge ok not-installed
+
+Package: opencv2
+Version: 2.4.13.7
+Port-Version: 25
+Depends: vcpkg-cmake, vcpkg-cmake-config, zlib
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 7f0791cd5048d5680412477f6fb800366a06a6e1c1af7bb53b8bf2f7301eb841
+Description: Open Source Computer Vision Library
+Default-Features: eigen, jpeg, msmf, png, tiff
+Status: purge ok not-installed
+
+Package: opencv2
+Feature: eigen
+Depends: eigen3
+Architecture: x64-windows
+Multi-Arch: same
+Description: Eigen support for opencv
+Status: purge ok not-installed
+
+Package: opencv2
+Feature: jpeg
+Depends: libjpeg-turbo
+Architecture: x64-windows
+Multi-Arch: same
+Description: JPEG support for opencv
+Status: purge ok not-installed
+
+Package: opencv2
+Feature: msmf
+Architecture: x64-windows
+Multi-Arch: same
+Description: Microsoft Media Foundation support for opencv
+Status: purge ok not-installed
+
+Package: opencv2
+Feature: png
+Depends: libpng
+Architecture: x64-windows
+Multi-Arch: same
+Description: PNG support for opencv
+Status: purge ok not-installed
+
+Package: opencv2
+Feature: tiff
+Depends: tiff
+Architecture: x64-windows
+Multi-Arch: same
+Description: TIFF support for opencv
+Status: purge ok not-installed
+

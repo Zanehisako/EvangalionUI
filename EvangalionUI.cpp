@@ -7,18 +7,43 @@
 #include <iostream>
 #include <print>
 #include "raylib-cpp.hpp"
+#include <opencv2/opencv.hpp>
 
 int main() {
-    constexpr int screenWidth = 1920;
-    constexpr int screenHeight = 1080;
+	cv::Mat frame1;
+	cv::Mat frame2;
+    cv::Mat framergb;
+
+    Image image_raylib;
+
+    cv::VideoCapture cap(0);
+	if (!cap.isOpened())
+	{
+		printf("ERROR Cannot open video\n");
+	}
+
+	cap.read(frame1);
+	cap.read(frame2);
+
+    int screenWidth = frame1.cols;
+	int screenHeight = frame1.rows;
 
     raylib::Window window(screenWidth, screenHeight, "Evangalion UI");
     // Load shader from files (use glsl330 folder for desktop)
     ToggleFullscreen();
 
-	constexpr int rectWidth = 100;
-	constexpr int rectHeight= 100;
-    raylib::Rectangle rect(screenWidth/2-rectWidth, screenHeight/2-rectHeight,rectWidth,rectHeight);
+    //--------------------------------------------------------------------------------------
+	// Convert from OpenCV to Raylib
+	//--------------------------------------------------------------------------------------
+    cv::cvtColor(frame2, framergb, cv::COLOR_BGR2RGB);
+
+    image_raylib.width = framergb.cols;
+	image_raylib.height = framergb.rows;
+	image_raylib.format = PIXELFORMAT_UNCOMPRESSED_R8G8B8;
+	image_raylib.mipmaps= 1 ;
+	image_raylib.data= (void*)(framergb.data);
+	
+	raylib::Texture2D texture(image_raylib);      // Image converted to texture, uploaded to GPU memory (VRAM)
 
 
     // Create a render texture to draw the scene first
@@ -37,6 +62,10 @@ int main() {
 
     while (!window.ShouldClose())
     {
+        // Paint last caputre frame
+		cv::cvtColor(frame2, framergb, cv::COLOR_BGR2RGB);
+		image_raylib.data = (void*)(framergb.data);
+		texture.Update(image_raylib.data);
         time += GetFrameTime();
         Vector2 resolution = {
             (float)GetScreenWidth(),
@@ -46,7 +75,7 @@ int main() {
         BeginTextureMode(target);
             ClearBackground(BLACK);
 
-            rect.DrawGradientV(GREEN,RED);
+            texture.Draw(raylib::Vector2(0,0),WHITE);
             DrawFPS(10, 10);
         EndTextureMode();
 
@@ -72,6 +101,17 @@ int main() {
 
 
         EndDrawing();
+        // Caputre new frame
+		frame1.release();
+		frame1 = frame2;
+		frame2.release();
+		cap.read(frame2);
+		if (frame2.empty())
+		{
+			break;
+
+		}
+	
     }
 
     return 0;
