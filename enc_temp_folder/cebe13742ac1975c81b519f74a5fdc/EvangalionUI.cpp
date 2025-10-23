@@ -96,12 +96,12 @@ int main() {
             (float)GetScreenHeight()
         };
         // --- Draw your game to the offscreen texture ---
-//        BeginTextureMode();
-//            ClearBackground(BLACK);
-//
-//            texture.Draw(raylib::Vector2(0,0),WHITE);
-//            DrawFPS(10, 10);
-//        EndTextureMode();
+        BeginTextureMode(target);
+            ClearBackground(BLACK);
+
+            texture.Draw(raylib::Vector2(0,0),WHITE);
+            DrawFPS(10, 10);
+        EndTextureMode();
 
         // update uniforms
         SetShaderValue(shader, resLoc, &resolution, SHADER_UNIFORM_VEC2);
@@ -113,10 +113,17 @@ int main() {
 
 		    BeginShaderMode(shader);
             // Draw the texture covering the entire screen
-            texture.Draw();
+                   DrawTexturePro(
+                       target.texture,
+                       raylib::Rectangle( 0, 0, (float)target.texture.width, (float)-target.texture.height ),
+                       raylib::Rectangle( 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() ),
+                       raylib::Vector2( 0, 0 ),
+                       0.0f,
+                       WHITE
+                   );
             EndShaderMode();
 
-            DrawFPS(10, 10);
+
         EndDrawing();
 	
     }
