@@ -30,11 +30,12 @@ int main() {
 
     raylib::Window window(screenWidth, screenHeight, "Evangalion UI");
     // Load shader from files (use glsl330 folder for desktop)
-    ToggleFullscreen();
+    //ToggleFullscreen();
 
     //--------------------------------------------------------------------------------------
 	// Convert from OpenCV to Raylib
 	//--------------------------------------------------------------------------------------
+
     cv::cvtColor(frame2, framergb, cv::COLOR_BGR2RGB);
 
     image_raylib.width = framergb.cols;
@@ -54,17 +55,39 @@ int main() {
     std::cout <<"shader info:" << shader.locs << std::endl;
     //SetTargetFPS(60);
       // Get uniform location(s)
-    int resLoc = GetShaderLocation(shader, "iResolution");
-    int timeLoc = GetShaderLocation(shader, "iTime");
-    Vector2 resolution = { (float)GetScreenWidth(), (float)GetScreenHeight() };
+	int resLoc = GetShaderLocation(shader, "iResolution");
+	int timeLoc = GetShaderLocation(shader, "iTime");
+	Vector2 resolution = { (float)GetScreenWidth(), (float)GetScreenHeight() };
 
-     float time = 0.0f;
+	float time = 0.0f;
+
+	std::atomic<bool> running = true;
+	std::mutex frame_mutex;
+
+	std::thread cam_thread([&] {
+		cv::VideoCapture cap(0);
+		while (running) {
+			cv::Mat new_frame;
+			if (cap.read(new_frame)) {
+				std::lock_guard<std::mutex> lock(frame_mutex);
+				frame2 = new_frame.clone();
+                 cv::cvtColor(new_frame, frame2, cv::COLOR_BGR2RGB);
+			}
+		}
+        cap.release();
+		});
 
     while (!window.ShouldClose())
     {
+         cv::Mat localFrame;
+        {
+            std::lock_guard<std::mutex> lock(frame_mutex);
+            if (!frame2.empty()) localFrame = frame2.clone();
+        }
         // Paint last caputre frame
-		cv::cvtColor(frame2, framergb, cv::COLOR_BGR2RGB);
+		cv::cvtColor(localFrame, framergb, cv::COLOR_BGR2RGB);
 		image_raylib.data = (void*)(framergb.data);
+        std::lock_guard<std::mutex> lock(frame_mutex);
 		texture.Update(image_raylib.data);
         time += GetFrameTime();
         Vector2 resolution = {
@@ -101,18 +124,9 @@ int main() {
 
 
         EndDrawing();
-        // Caputre new frame
-		frame1.release();
-		frame1 = frame2;
-		frame2.release();
-		cap.read(frame2);
-		if (frame2.empty())
-		{
-			break;
-
-		}
 	
     }
-
+    running = false;
+    cam_thread.join();
     return 0;
 }
