@@ -28,9 +28,15 @@ int main() {
     int screenWidth = frame1.cols;
 	int screenHeight = frame1.rows;
 
+
     raylib::Window window(1280, 720, "Evangalion UI");
     // Load shader from files (use glsl330 folder for desktop)
     //ToggleFullscreen();
+
+	raylib::Vector2 menuPosition(0, 0);
+	raylib::Vector2 menuSize(100, 300);
+
+    raylib::Rectangle menu(menuPosition, menuSize);
 
     //--------------------------------------------------------------------------------------
 	// Convert from OpenCV to Raylib
@@ -51,7 +57,7 @@ int main() {
     raylib::RenderTexture2D target(GetScreenWidth(), GetScreenHeight());
 
     raylib::Shader shader(NULL,
-                               "crt.fs");
+                               "hologram.fs");
     std::cout <<"shader info:" << shader.locs << std::endl;
     //SetTargetFPS(60);
       // Get uniform location(s)
@@ -103,6 +109,10 @@ int main() {
 //            DrawFPS(10, 10);
 //        EndTextureMode();
 
+
+        //update Menu position
+        menu.SetPosition(raylib::Mouse::GetPosition());
+
         // update uniforms
         SetShaderValue(shader, resLoc, &resolution, SHADER_UNIFORM_VEC2);
         SetShaderValue(shader, timeLoc, &time, SHADER_UNIFORM_FLOAT);
@@ -111,9 +121,10 @@ int main() {
 
             window.ClearBackground(BLACK);
 
+            //texture.Draw();
 		    BeginShaderMode(shader);
             // Draw the texture covering the entire screen
-            texture.Draw();
+                texture.Draw();
             EndShaderMode();
 
             DrawFPS(10, 10);
